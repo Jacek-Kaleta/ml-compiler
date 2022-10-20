@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="ml-compiler.css">
+	</head>
+	<body>
+		<fun id="my-familly" data-mother="Olivia" data-father="John"></fun>
+		<fun id="my-familly" data-mother="Emma" data-father="Andrew"></fun>
+		
+		<define>
+			<fun id="my-familly">
+				<fun id="f-bold">Mother {{mother}} and  Father {{father}}</fun>
+			</fun>
+			<fun id="f-bold">
+				<b>{{innerHTML}}</b> <br/>
+			<//fun>
+		</define>
+		<script src="ml-compiler.js"></script>
+	</body>
+</html>
