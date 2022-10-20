@@ -11,7 +11,8 @@
 	}
 	function res(name, HTML)
 	{
-		let e = document.querySelectorAll('fun#'+name);
+		if (name == undefined) return ;
+		let e = document.querySelectorAll('fun[name="'+name.nodeValue+'"]');
 		for (let i=0;i< e.length;i++)
 		{
 			e[i].innerHTML = cpar(HTML, e[i].dataset, e[i].innerHTML)
@@ -19,7 +20,7 @@
 	}
 	let p = document.querySelectorAll('define>fun');
 	for (let i=0;i< p.length;i++)
-		res(p[i].id, p[i].innerHTML);
+		res(p[i].attributes["name"], p[i].innerHTML);
 	document.body.style.display="block"
 })();
 
