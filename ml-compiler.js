@@ -23,8 +23,7 @@
 	{
 		res(p[i].attributes["name"], p[i].innerHTML);
 	}
-	document.body.style.display="block"
-
+	
 	{
 		function addStyle(styles) 
 		{
@@ -37,7 +36,7 @@
 			document.getElementsByTagName("head")[0].appendChild(css);
 		}	
 		let cssText  = "";
-		let style= document.querySelectorAll('define>style');
+		let styles= document.querySelectorAll('define>style');
 		for(let i=0;i<styles.length;i++)
 			cssText += styles[i].innerHTML;
 		addStyle(cssText);
@@ -48,5 +47,7 @@
 		for(let i=0;i<define.length;i++) 
 			define[i].outerHTML="";
 	}
+	
+	document.body.style.display="block"
 })();
 
