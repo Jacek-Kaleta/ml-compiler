@@ -1,14 +1,20 @@
 (function ()
 {
+	function replaceAll(str,find, replace) 
+	{
+		return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+	};
+	
 	function cpar(HTML, dataset, innerHTML)
 	{
-		let c = HTML.replaceAll('{{innerHTML}}', innerHTML);
+		let c = replaceAll(HTML,'{{innerHTML}}', innerHTML);
 		for(n in dataset)
 		{
-			c= c.replaceAll('{{'+n+'}}', dataset[n])
+			c= replaceAll(c,'{{'+n+'}}', dataset[n])
 		}
 		return c;
 	}
+
 	function res(name, HTML)
 	{
 		if (name == undefined) return ;
