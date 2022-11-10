@@ -28,7 +28,7 @@
         {
             function res_name(name, p) {
                 if (name == undefined) return; {
-                    let e = document.querySelectorAll('ml-compile fun[name="' + name.nodeValue + '"]');
+                    let e = document.querySelectorAll('ml-compiler fun[name="' + name.nodeValue + '"]');
                     for (let i = 0; i < e.length; i++)
                         e[i].outerHTML = cpar(p.innerHTML, e[i], p)
                 }
@@ -36,7 +36,7 @@
 
             function res_tagname(name, p) {
                 if (name == undefined) return; {
-                    let e = document.querySelectorAll('ml-compile ' + name.nodeValue);
+                    let e = document.querySelectorAll('ml-compiler ' + name.nodeValue);
                     for (let i = 0; i < e.length; i++)
                         e[i].outerHTML = cpar(p.innerHTML, e[i], p)
                 }
@@ -44,11 +44,13 @@
             let p = document.querySelectorAll('define>fun');
 
             for (let i = 0; i < p.length; i++) {
+                if (p[i].attributes["name"] != undefined)
                 res_name(p[i].attributes["name"], p[i]);
-            }
-            for (let i = 0; i < p.length; i++) {
+                else
+                if (p[i].attributes["tag-name"] != undefined)
                 res_tagname(p[i].attributes["tag-name"], p[i]);
             }
+            
         }
 
         {
@@ -76,7 +78,7 @@
         }
 
         {
-            let compiler = document.querySelectorAll('ml-compile');
+            let compiler = document.querySelectorAll('ml-compiler');
             for (let i = 0; i < compiler.length; i++)
                 compiler[i].outerHTML = compiler[i].innerHTML;
         }
