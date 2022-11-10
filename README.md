@@ -1,4 +1,5 @@
 # ml-compiler
 Markup Language Compiler
 
-See wiki: https://github.com/Jacek-Kaleta/ml-compiler/wiki
+Wiki: https://github.com/Jacek-Kaleta/ml-compiler/wiki
+Demo: https://ml-compiler.pages.dev
