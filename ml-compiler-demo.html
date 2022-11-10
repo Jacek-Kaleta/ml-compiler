@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="ml-compiler.css">
-	</head>
-	<body>
-		<ml-compile>
-			<my-familly data-mother="Olivia" data-father="John"></my-familly>
-			<familly mother="Emma" father="Andrew"></familly>
-		</ml-compile>
 
-		<define>
-			<inc name="ml-compiler-demo-fun-inc.html"/></inc>
-		</define>
-		<script src="ml-compiler.js"></script>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="ml-compiler.css">
+</head>
+
+<body>
+    <ml-compile>
+        <my-familly data-mother="Olivia" data-father="John"></my-familly>
+        <familly mother="Emma" father="Andrew"></familly>
+        <fam data-mother="Olivia" data-father="John"></fam>
+        <merge-html>
+            <div>
+                <label><b>label</b></label>
+            </div>
+            <div>
+                <edit><span>edit</span></edit>
+            </div>
+        </merge-html>
+    </ml-compile>
+
+    <define>
+        <inc name="ml-compiler-demo-fun-inc.html" /></inc>
+    </define>
+    <script src="ml-compiler.js"></script>
+</body>
+
 </html>

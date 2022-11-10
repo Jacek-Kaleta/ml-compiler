@@ -1,9 +1,15 @@
 <fun tag-name="my-familly">
-	<f-bold>Mother {{mother}} and  Father {{father}}</f-bold>
+    <f-bold>Mother {{mother}} and Father {{father}}</f-bold>
 </fun>
 <fun tag-name="familly">
-	<f-bold>Mother {{a.mother}} and  Father {{a.father}}</f-bold>
+    <f-bold>Mother {{a.mother}} and Father {{a.father}}</f-bold>
+</fun>
+<fun tag-name="fam">
+    <f-bold>Mother {{a.data-mother}} and Father {{a.data-father}}</f-bold>
 </fun>
 <fun tag-name="f-bold">
-	<b>{{innerHTML}}</b> <br/>
+    <b>{{innerHTML}}</b> <br/>
+</fun>
+<fun tag-name="merge-html" label edit>
+    {{label}} --- {{edit}}
 </fun>
