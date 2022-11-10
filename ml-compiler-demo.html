@@ -5,16 +5,13 @@
 		<link rel="stylesheet" href="ml-compiler.css">
 	</head>
 	<body>
-		<my-familly data-mother="Olivia" data-father="John"></my-familly>
-		<my-familly data-mother="Emma" data-father="Andrew"></my-familly>
-		
+		<ml-compile>
+			<my-familly data-mother="Olivia" data-father="John"></my-familly>
+			<familly mother="Emma" father="Andrew"></familly>
+		</ml-compile>
+
 		<define>
-			<fun tag-name="my-familly">
-				<f-bold>Mother {{mother}} and  Father {{father}}</f-bold>
-			</fun>
-			<fun tag-name="f-bold">
-				<b>{{innerHTML}}</b> <br/>
-			</fun>
+			<inc name="ml-compiler-demo-fun-inc.html"/></inc>
 		</define>
 		<script src="ml-compiler.js"></script>
 	</body>

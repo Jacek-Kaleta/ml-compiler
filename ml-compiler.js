@@ -1,77 +1,119 @@
 (function ()
 {
-	function replaceAll(str,find, replace) 
+	function compile()
 	{
-		return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
-	};
-	
-	function cpar(HTML, dataset, innerHTML)
-	{
-		let c = replaceAll(HTML,'{{innerHTML}}', innerHTML);
-		for(n in dataset)
+		function replaceAll(str,find, replace) 
 		{
-			c= replaceAll(c,'{{'+n+'}}', dataset[n])
+			return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+		};
+		
+		function cpar(HTML, dataset, attributes, innerHTML)
+		{
+			let c = replaceAll(HTML,'{{innerHTML}}', innerHTML);
+			for(let n in dataset)
+			{
+				c = replaceAll(c,'{{'+n+'}}', dataset[n])
+			}
+			for(let i = 0; i<attributes.length;i++)
+			{
+				c = replaceAll(c,'{{a.'+attributes[i].name+'}}', attributes[i].value)
+			}
+			return c;
 		}
-		return c;
+
+		{
+			function res_name(name, HTML)
+			{
+				if (name == undefined) return ;
+				{
+					let e = document.querySelectorAll('fun[name="'+name.nodeValue+'"]');
+					for (let i=0;i< e.length;i++)
+					{
+						e[i].outerHTML = cpar(HTML, e[i].dataset, e[i].attributes, e[i].innerHTML)
+					}
+				}
+			}
+			function res_tagname(name, HTML)
+			{
+				if (name == undefined) return ;
+				{
+					let e = document.querySelectorAll(name.nodeValue);
+					for (let i=0;i< e.length;i++)
+					{
+						e[i].outerHTML = cpar(HTML, e[i].dataset, e[i].attributes, e[i].innerHTML)
+					}
+				}
+			}
+			let p = document.querySelectorAll('define>fun');
+			//for (let i=0;i< p.length;i++) console.log(p[i]);
+			for (let i=0;i< p.length;i++)
+			{
+				res_name(p[i].attributes["name"], p[i].innerHTML);
+			}
+			for (let i=0;i< p.length;i++)
+			{
+				res_tagname(p[i].attributes["tag-name"], p[i].innerHTML);
+			}
+		}
+		
+		{
+			function addStyle(styles) 
+			{
+				var css = document.createElement('style');
+				css.type = 'text/css';
+				if (css.styleSheet)
+					css.styleSheet.cssText = styles;
+				else
+					css.appendChild(document.createTextNode(styles));
+				document.getElementsByTagName("head")[0].appendChild(css);
+			}
+
+			let cssText  = "";
+			let styles= document.querySelectorAll('define>style');
+			for(let i=0;i<styles.length;i++)
+				cssText += styles[i].innerHTML;
+			if(cssText.length > 0) addStyle(cssText);
+		}
+		
+		{
+			let define= document.querySelectorAll('define');
+			for(let i=0;i<define.length;i++) 
+				define[i].outerHTML="";
+		}
+		
+		{
+			let compiler= document.querySelectorAll('ml-compile');
+			for(let i=0;i < compiler.length;i++) 
+				compiler[i].outerHTML= compiler[i].innerHTML;
+		}
 	}
 
-	function res_name(name, HTML)
 	{
-		if (name == undefined) return ;
+		let p = document.querySelectorAll('define>inc');
+		if ( p.length > 0 )
 		{
-			let e = document.querySelectorAll('fun[name="'+name.nodeValue+'"]');
-			for (let i=0;i< e.length;i++)
+			let promises = [];
+			for (let i=0;i< p.length;i++)
 			{
-				e[i].outerHTML = cpar(HTML, e[i].dataset, e[i].innerHTML)
+				promises.push(
+				fetch(p[i].attributes["name"].value)
+					.then(response => { return response.text()})
+					.then(data => p[i].outerHTML = data)
+					.catch(error => {console.log(error)})
+				)
 			}
-		}
+			
+			Promise
+			.all(promises) 
+			.then(function() {compile()})
+			.catch(function(){compile()});
+		} else compile();
 	}
-	
-	function res_tagname(name, HTML)
+
 	{
-		if (name == undefined) return ;
-		{
-			let e = document.querySelectorAll(name.nodeValue);
-			for (let i=0;i< e.length;i++)
-			{
-				e[i].outerHTML = cpar(HTML, e[i].dataset, e[i].innerHTML)
-			}
-		}
+		let currentScript;
+		currentScript = document.currentScript || document.scripts[document.scripts.length - 1];
+		currentScript.parentNode.removeChild(currentScript);
 	}
-	let p = document.querySelectorAll('define>fun');
-	for (let i=0;i< p.length;i++)
-	{
-		res_name(p[i].attributes["name"], p[i].innerHTML);
-	}
-	for (let i=0;i< p.length;i++)
-	{
-		res_tagname(p[i].attributes["tag-name"], p[i].innerHTML);
-	}
-	
-	{
-		function addStyle(styles) 
-		{
-			var css = document.createElement('style');
-			css.type = 'text/css';
-			if (css.styleSheet)
-				css.styleSheet.cssText = styles;
-			else
-				css.appendChild(document.createTextNode(styles));
-			document.getElementsByTagName("head")[0].appendChild(css);
-		}	
-		let cssText  = "";
-		let styles= document.querySelectorAll('define>style');
-		for(let i=0;i<styles.length;i++)
-			cssText += styles[i].innerHTML;
-		if(cssText.length>0) addStyle(cssText);
-	}
-	
-	{
-		let define= document.querySelectorAll('define');
-		for(let i=0;i<define.length;i++) 
-			define[i].outerHTML="";
-	}
-	
-	document.body.style.display="block"
 })();
 
