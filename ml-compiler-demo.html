@@ -5,14 +5,14 @@
 		<link rel="stylesheet" href="ml-compiler.css">
 	</head>
 	<body>
-		<fun name="my-familly" data-mother="Olivia" data-father="John"></fun>
-		<fun name="my-familly" data-mother="Emma" data-father="Andrew"></fun>
+		<my-familly data-mother="Olivia" data-father="John"></my-familly>
+		<my-familly data-mother="Emma" data-father="Andrew"></my-familly>
 		
 		<define>
-			<fun name="my-familly">
-				<fun name="f-bold">Mother {{mother}} and  Father {{father}}</fun>
+			<fun tag-name="my-familly">
+				<f-bold>Mother {{mother}} and  Father {{father}}</f-bold>
 			</fun>
-			<fun name="f-bold">
+			<fun tag-name="f-bold">
 				<b>{{innerHTML}}</b> <br/>
 			</fun>
 		</define>

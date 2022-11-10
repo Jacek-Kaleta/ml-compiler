@@ -15,19 +15,38 @@
 		return c;
 	}
 
-	function res(name, HTML)
+	function res_name(name, HTML)
 	{
 		if (name == undefined) return ;
-		let e = document.querySelectorAll('fun[name="'+name.nodeValue+'"]');
-		for (let i=0;i< e.length;i++)
 		{
-			e[i].outerHTML = cpar(HTML, e[i].dataset, e[i].innerHTML)
+			let e = document.querySelectorAll('fun[name="'+name.nodeValue+'"]');
+			for (let i=0;i< e.length;i++)
+			{
+				e[i].outerHTML = cpar(HTML, e[i].dataset, e[i].innerHTML)
+			}
+		}
+	}
+	
+	function res_tagname(name, HTML)
+	{
+		if (name == undefined) return ;
+		{
+			console.log(name);
+			let e = document.querySelectorAll(name.nodeValue);
+			for (let i=0;i< e.length;i++)
+			{
+				e[i].outerHTML = cpar(HTML, e[i].dataset, e[i].innerHTML)
+			}
 		}
 	}
 	let p = document.querySelectorAll('define>fun');
 	for (let i=0;i< p.length;i++)
 	{
-		res(p[i].attributes["name"], p[i].innerHTML);
+		res_name(p[i].attributes["name"], p[i].innerHTML);
+	}
+	for (let i=0;i< p.length;i++)
+	{
+		res_tagname(p[i].attributes["tag-name"], p[i].innerHTML);
 	}
 	
 	{
