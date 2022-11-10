@@ -31,7 +31,6 @@
 	{
 		if (name == undefined) return ;
 		{
-			console.log(name);
 			let e = document.querySelectorAll(name.nodeValue);
 			for (let i=0;i< e.length;i++)
 			{
@@ -64,7 +63,7 @@
 		let styles= document.querySelectorAll('define>style');
 		for(let i=0;i<styles.length;i++)
 			cssText += styles[i].innerHTML;
-		addStyle(cssText);
+		if(cssText.length>0) addStyle(cssText);
 	}
 	
 	{
