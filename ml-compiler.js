@@ -19,40 +19,61 @@
             for (let n in e.dataset) {
                 c = replaceAll(c, '{{' + n + '}}', e.dataset[n])
             }
+
             for (let i = 0; i < e.attributes.length; i++) {
                 c = replaceAll(c, '{{a.' + e.attributes[i].name + '}}', e.attributes[i].value)
             }
             return c;
         }
 
+        // compile functions and tags
         {
-            function res_name(name, p) {
-                if (name == undefined) return; {
-                    let e = document.querySelectorAll('ml-compiler fun[name="' + name.nodeValue + '"]');
-                    for (let i = 0; i < e.length; i++)
-                        e[i].outerHTML = cpar(p.innerHTML, e[i], p)
+            {
+                function res_name(name, p) {
+                    if (name == undefined) return; {
+                        let e = document.querySelectorAll('ml-compiler fun[name="' + name.nodeValue + '"]');
+                        for (let i = 0; i < e.length; i++)
+                            e[i].outerHTML = cpar(p.innerHTML, e[i], p)
+                    }
+                }
+
+                function res_tagname(name, p) {
+                    if (name == undefined) return; {
+                        let e = document.querySelectorAll('ml-compiler ' + name.nodeValue);
+                        for (let i = 0; i < e.length; i++)
+                            e[i].outerHTML = cpar(p.innerHTML, e[i], p)
+                    }
+                }
+
+                let p = document.querySelectorAll('define>fun');
+
+                for (let i = 0; i < p.length; i++) //
+                {
+                    if (p[i].attributes["name"] != undefined)
+                        res_name(p[i].attributes["name"], p[i]);
+                    else
+                    if (p[i].attributes["tag-name"] != undefined)
+                        res_tagname(p[i].attributes["tag-name"], p[i]);
                 }
             }
-
-            function res_tagname(name, p) {
-                if (name == undefined) return; {
-                    let e = document.querySelectorAll('ml-compiler ' + name.nodeValue);
-                    for (let i = 0; i < e.length; i++)
-                        e[i].outerHTML = cpar(p.innerHTML, e[i], p)
+            //
+            {
+                function res_tagname(name, p) {
+                    if (name == undefined) return; {
+                        let e = document.querySelectorAll('ml-compiler ' + name);
+                        for (let i = 0; i < e.length; i++)
+                            e[i].outerHTML = cpar(p.innerHTML, e[i], p)
+                    }
                 }
-            }
-            let p = document.querySelectorAll('define>fun');
 
-            for (let i = 0; i < p.length; i++) {
-                if (p[i].attributes["name"] != undefined)
-                res_name(p[i].attributes["name"], p[i]);
-                else
-                if (p[i].attributes["tag-name"] != undefined)
-                res_tagname(p[i].attributes["tag-name"], p[i]);
+                let p = document.querySelectorAll('define-tag>*');
+
+                for (let i = 0; i < p.length; i++)
+                    res_tagname(p[i].nodeName.toLowerCase(), p[i]);
             }
-            
         }
 
+        // move style block
         {
             function addStyle(styles) {
                 var css = document.createElement('style');
@@ -71,12 +92,20 @@
             if (cssText.length > 0) addStyle(cssText);
         }
 
+        // remove define section
         {
             let define = document.querySelectorAll('define');
             for (let i = 0; i < define.length; i++)
                 define[i].outerHTML = "";
         }
+        // remove define-tag section
+        {
+            let define = document.querySelectorAll('define-tag');
+            for (let i = 0; i < define.length; i++)
+                define[i].outerHTML = "";
+        }
 
+        // remove ml-compiler tag
         {
             let compiler = document.querySelectorAll('ml-compiler');
             for (let i = 0; i < compiler.length; i++)
@@ -84,6 +113,7 @@
         }
     }
 
+    // include files
     {
         let p = document.querySelectorAll('define>inc');
         if (p.length > 0) {
@@ -104,6 +134,7 @@
         } else compile();
     }
 
+    // delete script
     {
         let currentScript;
         currentScript = document.currentScript || document.scripts[document.scripts.length - 1];

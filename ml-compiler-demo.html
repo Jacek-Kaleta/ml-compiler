@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <ml-compile>
+    <ml-compiler>
         <my-familly data-mother="Olivia" data-father="John"></my-familly>
         <familly mother="Emma" father="Andrew"></familly>
         <fam data-mother="Olivia" data-father="John"></fam>
@@ -19,11 +19,17 @@
                 <edit><span>edit</span></edit>
             </div>
         </merge-html>
-    </ml-compile>
+        <display-red>red color</display-red>
 
-    <define>
-        <inc name="ml-compiler-demo-fun-inc.html" /></inc>
-    </define>
+        <define>
+            <inc name="ml-compiler-demo-fun-inc.html" /></inc>
+        </define>
+        <define-tag>
+            <display-red>
+                <span style="color:red">{{innerHTML}}</span>
+            </display-red>
+        </define-tag>
+    </ml-compiler>
     <script src="ml-compiler.js"></script>
 </body>
 
