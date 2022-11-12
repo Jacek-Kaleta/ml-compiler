@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="ml-compiler.css">
+</head>
+<body>
+     <ml-compiler>
+          <my-new-tag>
+              <span> your innerHTML code  </span>
+          </my-new-tag>         
+          <define-tag>
+             <my-new-tag>
+                {{innerHTML}}
+             </my-new-tag>
+          </define-tag>
+     </ml-compiler>
+     <script src="ml-compiler.js"></script>
+</body>
+</html>

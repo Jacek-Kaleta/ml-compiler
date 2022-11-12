@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="ml-compiler.css">
+</head>
+<body>
+    <ml-compiler>
+        <my-new-tag label-1 = "label-1" label-2 = "label-2"> 
+        </my-new-tag>      
+        <define>
+            <fun tag-name = "my-new-tag">
+             parameters: {{a.label-1}} and ${a.label-2}
+            </fun>
+        </define>
+    </ml-compiler>
+    <script src="ml-compiler.js"></script>
+</body>
+</html>

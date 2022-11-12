@@ -6,22 +6,28 @@
 
         function cpar(HTML, e, p) {
             let c = replaceAll(HTML, '{{innerHTML}}', e.innerHTML);
+			c = replaceAll(c, '${innerHTML}', e.innerHTML);
 
             for (let i = 0; i < p.attributes.length; i++) {
                 let name = p.attributes[i].name.toLowerCase();
                 if (name != 'name' && name != 'tag-name') {
                     let q = e.querySelector(name);
                     if (q != null)
+					{
                         c = replaceAll(c, '{{' + name + '}}', q.innerHTML);
+						c = replaceAll(c, '${' + name + '}', q.innerHTML);
+					}
                 }
             }
 
             for (let n in e.dataset) {
                 c = replaceAll(c, '{{' + n + '}}', e.dataset[n])
+				c = replaceAll(c, '${' + n + '}', e.dataset[n])
             }
 
             for (let i = 0; i < e.attributes.length; i++) {
                 c = replaceAll(c, '{{a.' + e.attributes[i].name + '}}', e.attributes[i].value)
+				c = replaceAll(c, '${a.' + e.attributes[i].name + '}', e.attributes[i].value)
             }
             return c;
         }
@@ -56,7 +62,7 @@
                         res_tagname(p[i].attributes["tag-name"], p[i]);
                 }
             }
-            //
+            // compile tags defined in define-tag block
             {
                 function res_tagname(name, p) {
                     if (name == undefined) return; {
@@ -69,11 +75,15 @@
                 let p = document.querySelectorAll('define-tag>*');
 
                 for (let i = 0; i < p.length; i++)
-                    res_tagname(p[i].nodeName.toLowerCase(), p[i]);
+                {
+                    let tagname = p[i].nodeName.toLowerCase() ;
+                    if (tagname !='style')
+                        res_tagname(tagname, p[i]);
+                }
             }
         }
 
-        // move style block
+        // move style blocks
         {
             function addStyle(styles) {
                 var css = document.createElement('style');
@@ -116,13 +126,22 @@
     // include files
     {
         let p = document.querySelectorAll('define>inc');
-        if (p.length > 0) {
+		let q = document.querySelectorAll('define-tag>inc');
+        if (p.length + q.length > 0) {
             let promises = [];
             for (let i = 0; i < p.length; i++) {
                 promises.push(
                     fetch(p[i].attributes["name"].value)
                     .then(response => { return response.text() })
                     .then(data => p[i].outerHTML = data)
+                    .catch(error => { console.log(error) })
+                )
+            }
+			for (let i = 0; i < q.length; i++) {
+                promises.push(
+                    fetch(q[i].attributes["name"].value)
+                    .then(response => { return response.text() })
+                    .then(data => q[i].outerHTML = data)
                     .catch(error => { console.log(error) })
                 )
             }
