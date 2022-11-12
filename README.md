@@ -1,4 +1,4 @@
-# ml-compiler
+# ml-compiler.js
 Markup Language Compiler
 
 Wiki: https://github.com/Jacek-Kaleta/ml-compiler/wiki
