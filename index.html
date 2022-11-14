@@ -13,27 +13,28 @@
 		<link-to href="4.define-new-tag-2.html">4.2 Define new tag, example 2</link-to>
 		<link-to href="5.insert-content-of-function-or-tag-into-your-definition.html">5. Insert content of function or tag into your definition</link-to>
 		<link-to href="6.attribute-as-parameter.html">6. Attribute as parameter</link-to>
+	
+		<define>
+			<style>
+				body {font-size:2vw}
+				* {margin:1vw}
+			</style>
+			<fun tag-name="a-target">
+				<a href="{{a.href}}" target="_blank">{{innerHTML}}</a>
+			</fun>
+			
+			<fun tag-name="site-info">
+				<span class="site-info">{{innerHTML}}</span><br/>
+			</fun>
+		</define>
+		<define-tag>
+			<link-to>
+				<a  href="{{a.href}}" target="_blank">{{innerHTML}}</a><br/>
+			</link-to>
+		</define>
 	</ml-compiler>
-
-	<define>
-		<style>
-			body {font-size:2vw}
-			* {margin:1vw}
-		</style>
-		<fun tag-name="a-target">
-			<a href="{{a.href}}" target="_blank">{{innerHTML}}</a>
-		</fun>
-		
-		<fun tag-name="site-info">
-			<span class="site-info">{{innerHTML}}</span><br/>
-		</fun>
-		
-		<fun tag-name="link-to">
-			<a  href="{{a.href}}" target="_blank">{{innerHTML}}</a><br/>
-		</fun>
-		
-		
-	</define>
-
-	<script src="ml-compiler.min.js"></script>
+	<br/>
+	<br/>
+	
+	<script src="ml-compiler.js"></script>
 </body>
